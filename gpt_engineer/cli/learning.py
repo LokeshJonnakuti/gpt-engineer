@@ -41,7 +41,6 @@ TERM_CHOICES:
 """
 
 import json
-import random
 import tempfile
 
 from dataclasses import dataclass, field
@@ -54,6 +53,7 @@ from termcolor import colored
 
 from gpt_engineer.data.file_repository import FileRepository, FileRepositories
 from gpt_engineer.core.domain import Step
+import secrets
 
 
 @dataclass_json
@@ -272,8 +272,8 @@ def get_session() -> str:
             user_id = path.read_text()
         else:
             # random uuid:
-            user_id = str(random.randint(0, 2**32))
+            user_id = str(secrets.SystemRandom().randint(0, 2**32))
             path.write_text(user_id)
         return user_id
     except IOError:
-        return "ephemeral_" + str(random.randint(0, 2**32))
+        return "ephemeral_" + str(secrets.SystemRandom().randint(0, 2**32))
