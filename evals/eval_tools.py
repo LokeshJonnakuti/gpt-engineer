@@ -16,6 +16,7 @@ from datetime import datetime
 import yaml
 
 from tabulate import tabulate
+from security import safe_command
 
 EVAL_LIST_NAME = "evaluations"  # the top level list in the YAML file
 
@@ -72,8 +73,7 @@ def run_executable(eval_d: dict) -> subprocess.Popen:
     process_args = eval_d["executable_name"].split(" ") + eval_d[
         "executable_arguments"
     ].split(" ")
-    process = subprocess.Popen(
-        process_args,
+    process = safe_command.run(subprocess.Popen, process_args,
         bufsize=0,
         cwd=code_dir.absolute(),
         stdout=subprocess.PIPE,
