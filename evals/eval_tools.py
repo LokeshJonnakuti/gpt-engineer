@@ -73,7 +73,9 @@ def run_executable(eval_d: dict) -> subprocess.Popen:
     process_args = eval_d["executable_name"].split(" ") + eval_d[
         "executable_arguments"
     ].split(" ")
-    process = safe_command.run(subprocess.Popen, process_args,
+    process = safe_command.run(
+        subprocess.Popen,
+        process_args,
         bufsize=0,
         cwd=code_dir.absolute(),
         stdout=subprocess.PIPE,
